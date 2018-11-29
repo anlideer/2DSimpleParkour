@@ -26,6 +26,14 @@ public class Player : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        if (!GM.isOver)
+        {
+            if (transform.position.y < -4f)
+        {
+            GM.isOver = true;
+            GM.winned = false;
+        }
+
         // 锁一下旋转，免得出什么意外。。。我就爱锁旋转(x
         transform.rotation = origin;
 
@@ -52,21 +60,22 @@ public class Player : MonoBehaviour {
                 upSpeed += 0.05f;
             }
         }
-        if (transform.localScale.x <= 1)
-        {
-            //按下D键可以变大方块
-            if (Input.GetKey(KeyCode.D))
+            if (transform.localScale.x <= 1)
             {
-                //检测到方块上面是天花板则不能变大
-                if (Physics2D.Raycast(transform.position, Vector2.up, 0.9f, LayerMask.GetMask("Floor")))
+                //按下D键可以变大方块
+                if (Input.GetKey(KeyCode.D))
                 {
+                    //检测到方块上面是天花板则不能变大
+                    if (Physics2D.Raycast(transform.position, Vector2.up, 0.9f, LayerMask.GetMask("Floor")))
+                    {
 
-                }
-                else
-                {
-                    transform.localScale = new Vector3(transform.localScale.x + 0.01f, transform.localScale.y + 0.01f, transform.localScale.z + 0.01f);
-                    speed -= 0.05f;
-                    upSpeed -= 0.05f;
+                    }
+                    else
+                    {
+                        transform.localScale = new Vector3(transform.localScale.x + 0.01f, transform.localScale.y + 0.01f, transform.localScale.z + 0.01f);
+                        speed -= 0.05f;
+                        upSpeed -= 0.05f;
+                    }
                 }
             }
         }
