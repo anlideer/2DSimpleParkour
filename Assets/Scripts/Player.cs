@@ -5,8 +5,12 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 
+    public GameObject UICoin;
+
     public float speed = 7f;
     public float upSpeed = 5f;
+    public int money;
+    public Text moneyText;
 
     Rigidbody2D myRigid;
     Quaternion origin;
@@ -15,6 +19,8 @@ public class Player : MonoBehaviour {
 	void Start () {
         myRigid = GetComponent<Rigidbody2D>();
         origin = transform.rotation;
+        money = 0;
+        SetMoney();
 	}
 
     // Update is called once per frame
@@ -25,6 +31,7 @@ public class Player : MonoBehaviour {
 
         // 移动
         transform.Translate(speed * Time.deltaTime, 0, 0);
+        UICoin.transform.Translate(speed * Time.deltaTime, 0, 0);
         // 跳跃
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -63,7 +70,11 @@ public class Player : MonoBehaviour {
                 }
             }
         }
-
-
     }
+
+    public void SetMoney()
+    {
+        moneyText.text = money.ToString();
+    }
+
 }
